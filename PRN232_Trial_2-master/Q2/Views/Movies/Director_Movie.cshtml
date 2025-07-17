@@ -1,0 +1,60 @@
+﻿@model Q2.ViewModels.DirectorMovie
+@{
+    int diCount = 1;
+    int moCount = 0;
+}
+<h2>Directors</h2>
+<div style="display: flex;">
+
+    <div style="margin-right: 30px;width: 300px">
+        @foreach (var director in Model.directors)
+		{
+			<div>
+				<a id="di_@director.Id" href="/Movies/Director_Movie?directorId=@director.Id">
+					@director.FullName
+				</a>
+			</div>			
+		}
+    </div>
+
+
+    <div style="width: 1000px">
+        <h2>List of Movies</h2>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Release Date</th>
+                    <th>Description</th>
+                    <th>Language</th>
+                    <th>Director</th>
+                    <th>Stars</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var movie in Model.movies)
+                {
+                    <tr>
+                        <td id="td_title_@moCount"> @movie.Title </td>
+                        <td id="td_releaseDate_@moCount"> @movie.ReleaseDate</td>
+                        <td id="td_description_@moCount">@movie.Description</td>
+                        <td id="td_language_@moCount">@movie.Language</td>
+                        <td id="td_director_@moCount">@movie.Director.FullName</td>
+                        <td id="td_stars_@moCount">
+                            @(movie.Stars.Count() > 0 ? string.Join(",", movie.Stars.Select(s => s.FullName)) : "")
+                        </td>
+                        <td id="td_action_@moCount">
+                            <a id="btn_delete_@moCount" href="/Movies/Delete?movieId=@movie.Id">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    moCount++;
+                }
+                            
+            </tbody>
+        </table>
+    </div>
+</div>
+
